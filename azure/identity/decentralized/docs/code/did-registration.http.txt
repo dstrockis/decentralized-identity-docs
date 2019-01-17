@@ -1,0 +1,51 @@
+# NOTE: Be careful when editing this file, sections are referred to in docs by line number
+
+POST /api/v1.1 HTTP/1.1
+Host: beta.register.did.microsoft.com
+Content-Type: application/jwt
+Content-Length: 461
+
+eyJhbGciOiJSUzI1NiIsImtpZCI6ImtleS0xIn0.ewoJCSJkaWRNZXRob2QiOiAidGVzdCIsCg
+kJInB1YmxpY0tleSI6IFt7Imt0eSI6IlJTQSIsImtpZCI6ImtleS0xIiwiZSI6IkFRQUIiLCJu
+IjoiMFFHZVJ3ZE9Odl9KRXRFdU4zMFU0YnI1bEY5TlRXNjJmVS1LNnFOVFd5akhGcTNpcDFqSF
+9QSjdReGtHdVc4QTdFb1VUSmplWUE3NUw5VDZZaHRaM3ciLCJkZWZhdWx0RW5jcnlwdGlvbkFs
+Z29yaXRobSI6IlJTQS1PQUVQIn1dLAoJCSJodWJVcmkiOiAiZXhhbXBsZS5jb20iCgl9.FbS2S
+ikxykL77Rf9q73aMeQ307uPXNHojBpKsFgUAiYrqWyasdswSERFeENhNY7v5LFsqA_S99avQUlDSD3UFA
+
+
+
+{
+  "didMethod": "test",
+  "publicKey": [
+    {
+      "kty": "RSA",
+      "kid": "key-1",
+      "e": "AQAB",
+      "n": "0QGeRwdONv_JEtEuN30U4br5lF9NTW62fU-K6qNTWyjHFq3ip1jH_PJ7QxkGuW8A7EoUTJjeYA75L9T6YhtZ3w",
+      "defaultEncryptionAlgorithm": "RSA-OAEP"
+    }
+  ],
+  "hubUri": "example.com"
+}
+
+HTTP/1.1 200 OK
+Content-Length: 88
+Content-Type: application/json
+
+{
+    "did": "did:test:79cc8f04-0588-4513-b1c6-ae987610c082",
+    "status": "in-progress"
+}
+
+GET /api/v1.0/did:test:79cc8f04-0588-4513-b1c6-ae987610c082/status HTTP/1.1
+Host: beta.register.did.microsoft.com
+Accept: application/json
+
+HTTP/1.1 200 OK
+Content-Length: 88
+Content-Type: application/json
+
+{
+    "did": "did:test:79cc8f04-0588-4513-b1c6-ae987610c082",
+    "status": "registered"
+}

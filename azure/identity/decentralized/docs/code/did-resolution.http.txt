@@ -1,0 +1,40 @@
+# NOTE: Be careful when editing this file, sections are referred to in docs by line number
+
+GET /1.0/identifiers/did:test:79cc8f04-0588-4513-b1c6-ae987610c082 HTTP/1.1
+Host: beta.discover.did.microsoft.com
+Accept: application/json
+
+HTTP/1.1 200 OK
+Content-Length: 301
+Content-Type: application/json
+
+{
+  "document": {
+    "@context": "https://w3id.org/did/v1",
+    "id": "did:test:79cc8f04-0588-4513-b1c6-ae987610c082",
+    "created": "2018-10-10T22:12:51.445Z",
+    "publicKey": [
+      {
+        "id": "did:test:79cc8f04-0588-4513-b1c6-ae987610c082#testKey",
+        "type": "RsaVerificationKey2018",
+        "publicKeyPem": "-----BEGIN PUBLIC KEY----...",
+        "owner": "did:test:79cc8f04-0588-4513-b1c6-ae987610c082"
+      }
+    ],
+    "service": [{
+      "type": "IdentityHub",
+      "publicKey": "did:foo:123#key-1",
+      "serviceEndpoint": {
+        "@context": "https://identity.foundation/schemas",
+        "@type": "UserServiceEndpoint",
+        "instances": ["did:bar:456", "did:zaz:789"]
+      }
+    }]
+  },
+  "resolverMetadata": {
+    "driverId": "did:test",
+    "driver": "HttpDriver",
+    "retrieved": "2018-10-10T22:12:58.977Z",
+    "duration": "88.20ms"
+  }
+}

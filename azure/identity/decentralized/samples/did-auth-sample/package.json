@@ -1,0 +1,17 @@
+{
+  "name": "did-auth-sample",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server/app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@decentralized-identity/did-auth-jose": "^0.1.2",
+    "@decentralized-identity/hub-node-core": "^0.1.0",
+    "node-fetch": "^2.2.1",
+    "pem-jwk": "^1.5.1"
+  }
+}

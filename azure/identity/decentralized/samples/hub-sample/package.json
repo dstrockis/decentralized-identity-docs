@@ -1,0 +1,19 @@
+{
+  "name": "identity-hub-sample",
+  "version": "1.0.0",
+  "description": "A simple CLI that uses identity hubs to store a to-do list.",
+  "main": "index.js",
+  "bin": {
+    "todo": "bin/todo"
+  },
+  "scripts": {},
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@decentralized-identity/did-auth-jose": "^0.1.6",
+    "@decentralized-identity/hub-node-core": "^0.1.1",
+    "https-proxy-agent": "^2.2.1",
+    "minimist": "^1.2.0",
+    "node-fetch": "^2.3.0"
+  }
+}

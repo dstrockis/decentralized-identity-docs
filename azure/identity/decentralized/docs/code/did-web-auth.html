@@ -1,0 +1,58 @@
+<!-- <buttononly> -->
+<html>
+<body>
+    <button type="button" id="sign-in">Sign in with DID!</button>
+    <button type="button" id="sign-out" style="display:none">Sign Out</button>        
+    <pre id='display'></pre>
+    
+    <script>
+        var signIn = document.getElementById('sign-in');
+        var signOut = document.getElementById('sign-out');
+        var display = document.getElementById('display');
+        
+    </script>
+</body>
+</html>
+<!-- </buttononly> -->
+
+<!-- <sendrequest> -->
+<html>
+<body>
+    <button type="button" id="sign-in">Sign in with DID!</button>
+    <button type="button" id="sign-out" style="display:none">Sign Out</button>        
+    <pre id='display'></pre>
+    
+    <script>
+        var signIn = document.getElementById('sign-in');
+        var signOut = document.getElementById('sign-out');
+        var display = document.getElementById('display');
+        
+        // on button click, send a sign-in request to the User Agent
+        signIn.addEventListener('click', () => {
+            display.innerText = 'sending sign-in request';
+            
+            // Get an auth request from the server to send to user agent
+            fetch('/login')
+                .then(handleErrors)
+                .then(function(response) {
+                    response.text().then(function(authRequest) {
+                        // Trigger the DID user agent to prompt the user to sign-in
+                        navigator.did.requestAuthentication(authRequest)
+                            .then(response => {
+                        
+                                // Call /check-session to check 
+                                // that we are signed in with DID
+                                checkSignInStatus();
+                        
+                            }).catch(error => {
+                                display.innerText = 'Error returned from user agent: ' + error;
+                            })
+                    })
+                }).catch(function () {
+                    display.innerText = 'Error getting auth request from server.';
+                })
+        })
+    </script>
+</body>
+</html>
+<!-- </sendrequest> -->

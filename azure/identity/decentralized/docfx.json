@@ -1,10 +1,17 @@
 {
+  "metadata": [
+    {
+      "src": []
+    }
+  ],
   "build": {
     "content": [
       {
         "files": [
-          "**/*.md",
-          "**/*.yml"
+          "docs/**.md",
+          "index.md",
+          "toc.yml",
+          "docs/**/toc.yml"
         ],
         "exclude": [
           "**/obj/**",
@@ -21,8 +28,9 @@
     "resource": [
       {
         "files": [
-          "**/*.png",
-          "**/*.jpg"
+          "images/**",
+          "fonts/**",
+          "dist/**"
         ],
         "exclude": [
           "**/obj/**",
@@ -33,15 +41,26 @@
       }
     ],
     "overwrite": [],
-    "externalReference": [],
+    "dest": "decentralized-identity",
+    "globalMetadataFiles": [],
     "globalMetadata": {
+      "_disableContribution": true,
+      "_appTitle": "Decentralized Identity Developer Docs",
+      "_appLogoPath": "images/msft-logo.png",
+      "_disableNavbar": false,
+      "_enableSearch": false,
       "breadcrumb_path": "/azure/identity/decentralized/breadcrumb/toc.json",
       "extendBreadcrumb": true,
       "feedback_system": "None"
     },
-    "fileMetadata": {},
-    "template": [],
-    "dest": "decentralized-identity",
-    "markdownEngineName": "markdig"
+    "fileMetadataFiles": [],
+    "markdownEngineName": "markdig",
+    "template": [
+      "default",
+      "templates/mwf"
+    ],
+    "postProcessors": [],
+    "noLangKeyword": false,
+    "keepFileLink": false
   }
 }

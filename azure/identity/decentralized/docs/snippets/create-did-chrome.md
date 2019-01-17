@@ -1,0 +1,3 @@
+- Install the chrome extension by [following this guide](xref:a6b91f7e-4dac-4d20-9b1e-52d423e86feb).
+- Once installed, open the extension by clicking on the icon in Google Chrome.
+- Type in a friendly name for your DID and click create.

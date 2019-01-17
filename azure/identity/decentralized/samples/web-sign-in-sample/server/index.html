@@ -1,0 +1,73 @@
+<html>
+<body>
+    <button type="button" id="sign-in">Sign in with DID!</button>
+    <button type="button" id="sign-out" style="display:none">Sign Out</button>        
+    <pre id='display'></pre>
+    
+    <script>
+        var signIn = document.getElementById('sign-in');
+        var signOut = document.getElementById('sign-out');
+        var display = document.getElementById('display');
+        
+        // function to check if we're currently signed in to the website
+        function checkSignInStatus() {
+            
+            fetch('/check-session')
+            .then(handleErrors)
+            .then(function(response) {
+                response.text().then(function(message) {
+                    display.innerText = message;
+                    signIn.style.display = 'none';
+                    signOut.style.display = 'block';
+                }).catch(error => {
+                    console.log(error.message);
+                })
+            }).catch(error => {
+                console.log(error.message);
+            })
+        }
+        
+        // check if we're signed in when the page first loads
+        checkSignInStatus();
+        
+        // on button click, send a sign-in request to the User Agent
+        signIn.addEventListener('click', () => {
+            display.innerText = 'sending sign-in request';
+            
+            // Get an auth request from the server to send to user agent
+            fetch('/login')
+            .then(handleErrors)
+            .then(function(response) {
+                response.text().then(function(authRequest) {
+                    // Trigger the DID user agent to prompt the user to sign-in
+                    navigator.did.requestAuthentication(authRequest).then(response => {
+                        
+                        // If the call succeeded, the server should have received an auth response
+                        // Call /check-session to double check that we are signed in with our DID
+                        checkSignInStatus();
+                        
+                    }).catch(error => {
+                        display.innerText = 'Error returned from user agent: ' + error;
+                    })
+                })
+            })
+            .catch(function () {
+                display.innerText = 'Error getting auth request from server.';
+            })
+        })
+        
+        // handles errors if server sends back a bad response
+        function handleErrors(response) {
+            if (!response.ok) {
+               throw new Error(response.statusText);
+            }
+            return response;
+        }
+        
+        // on button click, redirect to the logout page
+        signOut.addEventListener('click', () => {
+            window.location = "/logout";
+        })
+    </script>
+</body>
+</html>
