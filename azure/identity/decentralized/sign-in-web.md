@@ -84,11 +84,11 @@ This is all that is necessary to add DID based sign-in to your web page. The ent
 
 The server implementation begins by loading the DIF authentication packages, reading the website's private key from disk, and instantiating an `Authentication` class. Most of the code here is used to convert keys into the expected formats.
 
-[!code-javascript[Generate auth request](../samples/web-sign-in-sample/server/app.js#L10-L43)]
+[!code-javascript[Generate auth request](./samples/web-sign-in-sample/server/app.js#L10-L43)]
 
 The first route the server exposes is the `/login` route, which receives AJAX requests from the browser and returns a signed DID authentication request using the `Authentication` class. The browser will ask for a new signed request each time the user clicks the sign-in button.
 
-[!code-javascript[Generate auth request](../samples/web-sign-in-sample/server/app.js#L81-L102)]
+[!code-javascript[Generate auth request](./samples/web-sign-in-sample/server/app.js#L81-L102)]
 
 | property | value | description | 
 | -------- | ----- | ----------- |
@@ -102,7 +102,7 @@ The first route the server exposes is the `/login` route, which receives AJAX re
 
 When the user approves a sign-in request, their user agent will return a DID authentication response to the indicated redirect URI. The server will receieve this request at `/auth-response` and validate it using the `Authentication` class:
 
-[!code-javascript[Generate auth request](../samples/web-sign-in-sample/server/app.js#L104-L114)]
+[!code-javascript[Generate auth request](./samples/web-sign-in-sample/server/app.js#L104-L114)]
 
 The user's DID is available in the `sub` claim of the response, which is formatted as a JSON web token ([JWT](https://en.wikipedia.org/wiki/JSON_Web_Token)). You can use this value as the user's unique ID across your apps & systems if you wish.
 
@@ -110,11 +110,11 @@ At this point, you have succesfully authenticated the user with their DID! But o
 
 After validating the authentication response, start a session using the `express-session` NPM package in `server/app.js`:
 
-[!code-javascript[Generate auth request](../samples/web-sign-in-sample/server/app.js#L104-L123)]
+[!code-javascript[Generate auth request](./samples/web-sign-in-sample/server/app.js#L104-L123)]
 
 Then on each request to the server, check for a valid DID-bound session, which will ensure the user must be logged in with their DID to access the site:
 
-[!code-javascript[Generate auth request](../samples/web-sign-in-sample/server/app.js#L49-L69)]
+[!code-javascript[Generate auth request](./samples/web-sign-in-sample/server/app.js#L49-L69)]
 
 Congratulations! You've successfully added DID sign-in to a website using public key credentials that are published using distributed ledger technologies. You're well on your way to building a new wave of apps and services that let users own and control their digital identity.
 

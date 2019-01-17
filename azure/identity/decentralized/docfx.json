@@ -8,10 +8,8 @@
     "content": [
       {
         "files": [
-          "docs/**.md",
-          "index.md",
+          "**.md",
           "toc.yml",
-          "docs/**/toc.yml"
         ],
         "exclude": [
           "**/obj/**",

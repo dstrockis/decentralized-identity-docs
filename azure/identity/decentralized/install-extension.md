@@ -16,7 +16,7 @@ The current User Agent extension is an experimental prototype, and is currently 
 3. Open Google Chrome.
 4. Go to [chrome://extensions/](chrome://extensions/)
 5. Enable "Developer mode" on the top left. 
-    ![Enabled developer Mode](../images/developerMode.png)
+    ![Enabled developer Mode](./images/developerMode.png)
 6. Click the "Load unpacked" button.
-    ![Selected Load Unpacked button](../images/loadUnpacked.png)
+    ![Selected Load Unpacked button](./images/loadUnpacked.png)
 7. Choose the extracted folder `example-user-agent` and load the extension into Chrome.

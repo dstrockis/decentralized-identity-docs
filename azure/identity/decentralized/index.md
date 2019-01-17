@@ -2,48 +2,7 @@
 uid: 2776478e-dc56-4534-ab56-2b8cde8d375b
 ---
 
-<style>
-body {font-size: 16px;}
-h2 { padding-top: 20px; }
-pre {
-    position: relative;
-    width: 100%;
-    padding: 9.5px;
-    left: 0;
-    border-radius: 4px;
-}
-
-code.hljs {
-    padding-left:0px;
-    padding-right:0px;
-}
-
-.bs-docs-sidebar {
-    display:none;
-}
-
-.icon-subtext {
-    margin-top: 10px;
-}
-</style>
-
 # A new approach to digital **IDENTITY**.
-With the help of decentralized technologies.
-
-<br />
-
-<table class="table table-landing">
-<tbody>
-<tr>
-<td><i class="fas fa-id-card fa-3x"></i><div class="icon-subtext">Registration<br /><a href="/docs/registration.html">Docs</a> | <a href="/docs/registration.html">Samples</a></div></td>
-<td><i class="fas fa-search fa-3x"></i><div class="icon-subtext">Discovery<br /><a href="/docs/discovery.html">Docs</a> | <a href="/docs/discovery.html">Samples</a></div></td>
-<td><i class="fas fa-fingerprint fa-3x"></i><div class="icon-subtext">Authentication<br /><a href="/docs/sign-in-web.html">Docs</a> | <a href="/docs/sign-in-web.html">Samples</a></div></td>
-<td><i class="fas fa-database fa-3x"></i><div class="icon-subtext">Personal Info<br />(Coming Soon)</td>
-</tr>
-</tbody>
-</table>
-
-<br />
 
 Each of us needs a digital identity we own, one which securely and privately stores all elements of our digital identity. A self-owned identity must seamlessly integrate into our lives and give us complete control over how our identity data is accessed and used.
 
