@@ -22,7 +22,7 @@ Before getting started, you should:
 
 ## Download code sample
 
-To download the code, [click here](/dist/sign-in-sample.zip) to download a zip file and unzip it to a location of your choice.
+To download the code, [click here](./dist/sign-in-sample.zip) to download a zip file and unzip it to a location of your choice.
 
 ## Set up the web server 
 
@@ -78,7 +78,7 @@ When the button is clicked, the web page does three things:
 
 [!code-html[Sign-in button](./code/did-web-auth.html#sendrequest)]
 
-This is all that is necessary to add DID based sign-in to your web page. The entire `index.html` file is available in the [complete sample](/dist/sign-in-sample.zip). Now let's move on to the server.
+This is all that is necessary to add DID based sign-in to your web page. The entire `index.html` file is available in the [complete sample](./dist/sign-in-sample.zip). Now let's move on to the server.
 
 ### server/app.js
 
@@ -118,4 +118,4 @@ Then on each request to the server, check for a valid DID-bound session, which w
 
 Congratulations! You've successfully added DID sign-in to a website using public key credentials that are published using distributed ledger technologies. You're well on your way to building a new wave of apps and services that let users own and control their digital identity.
 
-For the complete code sample, [click here](/dist/sign-in-sample.zip).
+For the complete code sample, [click here](./dist/sign-in-sample.zip).

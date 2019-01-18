@@ -102,6 +102,7 @@ app.get('/login', function (req, res) {
                     `&scope=openid`
 
   res.send(oidc_request)
+  console.log(oidc_request)
 })
 
 // request from user agent to get a signed request (OIDC section 6.2)
@@ -121,6 +122,7 @@ app.get('/auth-request', function (req, res) {
 
   // sign auth request and produce JWS to send to client
   auth.signAuthenticationRequest(authRequest).then(function (authReqJws) {
+    res.type('application/jwt');
     res.send(authReqJws)
   }).catch(function (error) {
     res.status(500).send(error)
