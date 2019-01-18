@@ -5,10 +5,6 @@ uid: 4d54b401-1bb0-4470-9d43-c2cb2cde1184
 DID Registration
 ===================
 
-Updated: November 8, 2018
-
-<br />
-
 Registering a Decentralized Identifier (DID) is the process of creating a unique identifier on a distributed ledger and associating it with one or more public keys. You can prove you are the owner/controller of a DID to anyone you choose, as long as you possess the corresponding private key(s). DIDs form the foundation of decentralized identity. The W3C Credentials Community Group's [DID spec](https://w3c-ccg.github.io/did-spec/) explains the DID technical standard in more detail. 
 
 The way you claim a DID and publish your public keys depends on which distributed ledger you use to register your DID. Each ledger has its own rules, formats, and quirks. Thankfully, the developing DID standard defines common ways to deal with DIDs, and our services expose the standard to you in a simple web API. Currently, we're developing support for the following ledgers:

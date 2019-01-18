@@ -5,10 +5,6 @@ uid: b8c39fd6-5021-4593-a11d-7d5867e446e5
 Securing messages with DIDs
 =============================
 
-Updated: November 8, 2018
-
-<br />
-
 Because each DID has one or more public keys, you can use DIDs to authenticate and encrypt messages between two parties. In this article, we'll demonstrate the use of DIDs to authenticate and encrypt messages between a client app and a web server using the experimental DID authentication libraries from the decentralized identity foundation (DIF).
 
 ## Prerequisites

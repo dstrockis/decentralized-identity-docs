@@ -5,10 +5,6 @@ uid: 4cbe4653-e1b6-4240-a8f2-cacbb30b95d7
 DID sign-in for web applications
 =======================
 
-Updated: December 18, 2018
-
-<br />
-
 You can allow users to sign-in to your app with their DID instead of a username & password or a social account like Google or Facebook. In this article, you'll build a simple web app that authenticates a user with their DID using experimental DID authentication libraries from the Decentralized Identity Foundation (DIF).
 
 ## Prerequisites

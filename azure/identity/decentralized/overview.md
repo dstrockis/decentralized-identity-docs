@@ -161,10 +161,6 @@ uid: 6dda9f38-227a-4a60-99f1-b58343f7324d
 Decentralized identity APIs
 ======================
 
-Updated: November 8, 2018
-
-<br />
-
 Welcome to the developer documentation for decentralized identity at Microsoft. We recommend reading a bit about [our vision for decentralized identity](https://query.prod.cms.rt.microsoft.com/cms/api/am/binary/RE2DjfY) before getting started. 
 
 <hr />
