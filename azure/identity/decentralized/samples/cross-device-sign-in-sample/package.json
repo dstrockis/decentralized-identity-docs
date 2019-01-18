@@ -12,6 +12,7 @@
     "@decentralized-identity/did-auth-jose": "0.1.6",
     "@decentralized-identity/hub-node-core": "^0.1.0",
     "body-parser": "^1.18.3",
+    "cors": "^2.8.5",
     "express": "^4.16.4",
     "express-session": "^1.15.6",
     "pem-jwk": "^1.5.1"

@@ -4,6 +4,7 @@ var pemJwk = require('pem-jwk');
 var fs = require('fs');
 var path = require('path');
 const express = require('express')
+var cors = require('cors')
 var session = require('express-session')
 var bodyParser = require('body-parser')
 
@@ -45,6 +46,11 @@ const auth = new didAuth.Authentication({
 //////////// Main server function
 const app = express()
 const port = process.env.PORT || 1337;
+
+var corsOptions = {
+  methods: ['POST', 'GET', 'OPTIONS']
+}
+app.use(cors(corsOptions))
 
 // Set up cookie based sessions
 app.use(session({

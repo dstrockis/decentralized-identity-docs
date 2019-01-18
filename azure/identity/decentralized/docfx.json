@@ -9,7 +9,7 @@
       {
         "files": [
           "**.md",
-          "toc.yml",
+          "toc.yml"
         ],
         "exclude": [
           "**/obj/**",
