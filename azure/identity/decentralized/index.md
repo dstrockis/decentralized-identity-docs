@@ -2,7 +2,7 @@
 uid: 2776478e-dc56-4534-ab56-2b8cde8d375b
 ---
 
-# A new approach to digital **IDENTITY**.
+# A new approach to digital identity.
 
 Each of us needs a digital identity we own, one which securely and privately stores all elements of our digital identity. A self-owned identity must seamlessly integrate into our lives and give us complete control over how our identity data is accessed and used.
 
