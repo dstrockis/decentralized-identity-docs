@@ -7,6 +7,7 @@ const express = require('express')
 var cors = require('cors')
 var session = require('express-session')
 var bodyParser = require('body-parser')
+var MemoryStore = require('memorystore')(session)
 
 //////////////// DID specific packages
 var hub = require('@decentralized-identity/hub-node-core');
@@ -16,7 +17,7 @@ var RsaPrivateKey = require('@decentralized-identity/did-auth-jose/dist/lib/cryp
 ///////////// Constants
 const discovery_endpoint = "https://beta.discover.did.microsoft.com/";
 const serverKeyId = "testKey";
-const serverDid = "did:test:7716159d-ab92-4771-aacd-b491f72dfc3f"; //PUT IN YOUR REGISTERED DID HERE
+const serverDid = "did:test:1a00b6e1-8d25-4d54-901e-5521dd615f58"; //PUT IN YOUR REGISTERED DID HERE
 
 ///////////// Load the server's DID private key
 // Convert PEM RSA key into JWK with correct key ID
@@ -53,23 +54,23 @@ var corsOptions = {
 app.use(cors(corsOptions))
 
 // Set up cookie based sessions
+sessionStore = new MemoryStore()
 app.use(session({
+  store: sessionStore,
   secret: 'cookie-secret-key',
   resave: false,
   saveUninitialized: true
 }))
 
-// require sign-in for all routes except 
-// home, login, and auth-response
+// require sign-in for all routes except login-related routes & home page
 app.use(function (req, res, next) {
 
-  if (['/', '/login', '/auth-response', '/auth-request'].indexOf(req.path) >= 0) {
+  if (['/', '/login', '/logout', '/auth-response', '/auth-pending', '/auth-request', '/auth-confirm'].indexOf(req.path) >= 0) {
     return next()
   }
 
-  if (!req.session.did) {
-     return res.status(401).send("Unauthorized, please log in.")
-  }
+  if (!req.session.did) 
+    return res.status(401).send();
  
   next()
 })
@@ -96,13 +97,14 @@ app.get('/login', function (req, res) {
   // form OIDC request using request_uri parameter
   var oidc_request = `openid://` +
                     `?response_type=id_token` +
+                    `&response_mode=form_post` +
                     `&client_id=${redirectUrl}` +
                     `&request_uri=${request_uri}` +
                     `&state=some-random-text-needed-due-to-bug-in-qr-library` +
                     `&scope=openid`
 
-  res.send(oidc_request)
   console.log(oidc_request)
+  res.send(oidc_request)
 })
 
 // request from user agent to get a signed request (OIDC section 6.2)
@@ -115,8 +117,8 @@ app.get('/auth-request', function (req, res) {
     response_type: 'id_token',
     client_id: redirectUrl,
     scope: 'openid',
-    state: undefined,
-    nonce: req.query.session,
+    state: req.query.session,
+    nonce: undefined,
     claims: undefined
   }
 
@@ -127,34 +129,112 @@ app.get('/auth-request', function (req, res) {
   }).catch(function (error) {
     res.status(500).send(error)
   })
-
 })
 
 // ajax request to receive auth response from user agent
 // expects incoming response in JWS format
-var textParser = bodyParser.text({ type: 'application/jwt' })
-app.post('/auth-response', textParser, function (req, res) {
+var urlencodedParser = bodyParser.urlencoded({ extended: false })
+app.post('/auth-response', urlencodedParser, function (req, res) {
 
-  // validate an incoming DID authentication response
-  auth.verifyAuthenticationResponse(req.body).then(function(authResponse) {
+    // load the user's' session from the session store
+    sessionStore.get(req.body.state, async function (error, sesh) {
+      
+      if (error)
+        throw new Error('Could not find matching session for authenication response.');
+      
+      var fiveMinsFromNow = new Date(Date.now() + (5 * 60 * 1000));
+      sesh.pendingReq = {"exp": fiveMinsFromNow}
 
-    // validate the nonce in the returned authentication response
-    if (authResponse.nonce != req.session.id)
-      throw 'Nonce in auth response did not match nonce in session cookie.'
+      // if the user agent returns an error, record the error in the session
+      if (req.body.error) {
+        sesh.pendingReq.error = req.body.error_description;
+      }
 
-    // bind the session to the DID included in the response
-    req.session.did = authResponse.sub;
-    res.status(200).json();
+      // if no error occurred, validate the id_token
+      if (req.body.id_token) {
 
-  }).catch(function(error) {
-    res.status(401).send('Unable to verify authentication response: ' + error);
-  })
+        try {
+
+          var authResponse = await auth.verifyAuthenticationResponse(req.body.id_token);
+
+          // the user is not signed-in yet; they need to match the user_code provided
+          sesh.pendingReq.did = authResponse.sub;
+          sesh.pendingReq.user_code = authResponse.user_code;
+
+        } catch (err) {
+          return res.status(401).send('Unable to verify authentication response: ' + error);
+        }
+      }
+
+      // update the user's session with the results of the pending sign-in
+      sessionStore.set(req.body.state, sesh, function (err) {
+
+        if (err)
+          throw new Error('Could not save updated session.'); 
+
+        return res.status(204).send();
+      
+      })
+  });
+})
+
+// ajax request to see if there is a pending authenication
+// request that the user can fulfill
+app.get('/auth-pending', function (req, res) {
+  
+  // if a valid pending request exists
+  var currentTime = new Date();
+  if (req.session.pendingReq && currentTime <= Date.parse(req.session.pendingReq.exp)) {
+
+    // if an error occurred in the request, return it to the client
+    // and then clear the pending request.
+    if (req.session.pendingReq.error) {
+      var auth_error = req.session.pendingReq.error;
+      req.session.pendingReq = null;
+      return res.json({"auth_error": auth_error});
+    }
+
+    // otherwise, there is a valid pending request, return 200 w/o error
+    return res.json({});
+  }
+
+  // if there is not a pending request, return not found
+  return res.status(404).send();
+
+})
+
+// ajax request to receive auth response from user agent
+// expects incoming response in OIDC form_post format
+var jsonParser = bodyParser.json()
+app.post('/auth-confirm', jsonParser, function (req, res) {
+
+  // if there's no valid pending request
+  var currentTime = new Date();
+  if (!req.session.pendingReq || currentTime > Date.parse(req.session.pendingReq.exp))
+    return res.status(401).send('Your sign in request may have expired. Please try signing in again.');
+
+  // if incoming user_code matches pending user code, 
+  // sign in the user and return success
+  if (req.body.user_code == req.session.pendingReq.user_code) {
+    req.session.did = req.session.pendingReq.did;    
+    req.session.pendingReq = null;
+    return res.status(204).send();
+  }
+
+  // if incoming user_code does not match a pending code
+  if (req.body.user_code != req.session.pendingReq.user_code) {
+    return res.status(401).send(`The code ${req.body.user_code} is not correct, please try again.`);
+  }
 })
 
 // wipe the session to log the user out, and redirect to home page
 app.get('/logout', function(req, res) {
-  req.session.did = null
-  res.redirect('/')
+  req.session.destroy(function(err) {
+    if (err) 
+      throw err;
+
+    res.redirect('/');
+  })
 })
 
 // start server

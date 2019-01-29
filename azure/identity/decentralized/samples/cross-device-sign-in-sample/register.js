@@ -9,12 +9,12 @@ const serverKeyId = "testKey";
 
 ///////////// Load private key
 // Convert PEM RSA key into JWK with correct key ID
-const privatePem = fs.readFileSync(path.resolve(__dirname, './server/private.pem'), 'ascii');
+const privatePem = fs.readFileSync(path.resolve(__dirname, './private.pem'), 'ascii');
 const jwkPriv = pemJwk.pem2jwk(privatePem);
 jwkPriv.kid = serverKeyId;
 
 // Convert PEM RSA key into JWK with correct key ID
-const publicPem = fs.readFileSync(path.resolve(__dirname, './server/public.pem'), 'ascii');
+const publicPem = fs.readFileSync(path.resolve(__dirname, './public.pem'), 'ascii');
 const jwkPub = pemJwk.pem2jwk(publicPem);
 jwkPub.kid = serverKeyId;
 

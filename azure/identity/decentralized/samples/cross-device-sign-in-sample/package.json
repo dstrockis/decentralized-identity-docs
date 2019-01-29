@@ -15,6 +15,8 @@
     "cors": "^2.8.5",
     "express": "^4.16.4",
     "express-session": "^1.15.6",
+    "memorystore": "^1.6.0",
+    "morgan": "^1.9.1",
     "pem-jwk": "^1.5.1"
   }
 }
